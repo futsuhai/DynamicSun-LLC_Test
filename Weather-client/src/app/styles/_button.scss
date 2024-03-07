@@ -1,0 +1,8 @@
+.button {
+    &_empty {
+        padding: 0px;
+        background: inherit;
+        border: none;
+        cursor: pointer;
+    }
+}

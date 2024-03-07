@@ -1,0 +1,148 @@
+.main-page-component {
+    &__content-wrapper {}
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    &__time-selection {
+        padding: 16px;
+        border-radius: 16px;
+        background: var(--white);
+    }
+}
+
+.main-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+
+    &__weather {
+        width: 100%;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 2px 8px 20px -1px rgba(0, 0, 0, 0.15);
+        background: var(--white);
+    }
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    &__location {
+        font-weight: 700;
+        font-size: var(--text-size-l);
+        color: var(--grey);
+    }
+
+    &__date {
+        font-size: var(--text-size-m);
+        color: var(--grey);
+    }
+}
+
+.weather {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 92px;
+}
+
+.temperature {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    &__title {
+        font-size: var(--text-size-m);
+        color: var(--grey-light);
+    }
+
+    &__value {
+        font-size: var(--text-size-xl);
+        font-weight: 700;
+        color: var(--grey);
+    }
+
+    &__feel {
+        font-size: var(--text-size-s);
+        color: var(--grey);
+    }
+}
+
+.condition {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__icon {
+
+    }
+
+    &__name {
+        font-size: var(--text-size-m);
+        color: var(--grey);
+    }
+}
+
+.time-selection {
+    display: flex;
+    justify-content: space-between;
+
+    &__item {
+        padding: 8px;
+        border-radius: 16px;
+        border: 1px solid var(--white);
+
+        &_active {
+            border: 1px solid var(--violet);
+        }
+    }
+}
+
+.time {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+
+    &__weather-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.addictional-info {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__name {
+        font-size: var(--text-size-m);
+        color: var(--grey-light);
+    }
+}
+
+.values {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__value {
+        font-size: var(--text-size-m);
+        color: var(--grey);
+    }
+}

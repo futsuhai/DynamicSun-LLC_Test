@@ -1,0 +1,14 @@
+<div class="sidebar-wrapper sidebar-component__sidebar-wrapper">
+    <a [routerLink]="['/main']" class="rout sidebar-wrapper__rout" [ngClass]="{ 'sidebar-wrapper__rout_active' : isRouteActive('/main')}">
+        <img [src]="isRouteActive('/main') ? 'assets/weather-active.svg' : 'assets/weather.svg'" 
+        alt="weather-icon" 
+        class="rout__icon">
+        Main
+    </a>
+    <a [routerLink]="['/upload']" class="rout sidebar-wrapper__rout" [ngClass]="{ 'sidebar-wrapper__rout_active' : isRouteActive('/upload')}">
+        <img [src]="isRouteActive('/upload') ? 'assets/upload-active.svg' : 'assets/upload.svg'" 
+        alt="upload-icon" 
+        class="rout__icon">
+        Upload
+    </a>
+</div>

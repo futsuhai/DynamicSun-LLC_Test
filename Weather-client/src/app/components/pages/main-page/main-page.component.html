@@ -1,0 +1,59 @@
+<div class="content-wrapper">
+    <div class="main-info">
+        <div class="title">
+            <h1 class="title__location">
+                Москва, Россия
+            </h1>
+            <p class="title__date">
+                7 Февраля 2023
+            </p>
+        </div>
+        <div class="weather main-info__weather">
+            <div class="temperature">
+                <p class="temperature__title">
+                    Температура
+                </p>
+                <p class="temperature__value">
+                    20°
+                </p>
+                <p class="temperature__feel">
+                    Ощущается как: 20°
+                </p>
+            </div>
+            <div class="condition">
+                <img src="assets/conditions/cloudy.svg" alt="condition-icon" class="condition__icon">
+                <p class="condition__name">
+                    Облачно
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="time-selection content-wrapper__time-selection">
+        <button
+            *ngFor="let option of [0, 1, 2, 3, 4, 5, 6]; let i = index" 
+            type="button" 
+            class="time time-selection__item button_empty"
+            (click)="toggleActive(i)" 
+            [ngClass]="{'time-selection__item_active': activeIndex === i}">
+                <p class="time__value">
+                    00
+                </p>
+                <img src="assets/conditions/cloudy.svg" alt="weather-icon" class="time__weather-icon">
+                <p class="time__temperature">
+                    20°
+                </p>
+        </button>
+    </div>
+    <div class="addictional-info">
+        <div class="options">
+            <p *ngFor="let option of [0, 1, 2, 3, 4, 5, 6, 7]" class="options__name">
+                {{ names[option] }}
+            </p>
+        </div>
+        <div class="values">
+            <p *ngFor="let option of [0, 1, 2, 3, 4, 5, 6, 7]" class="values__value">
+                {{ values[option] }}
+            </p>
+        </div>
+    </div>
+</div>
