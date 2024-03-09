@@ -1,8 +1,19 @@
 .button {
+    cursor: pointer;
+
+    &_primary {
+        padding: 12px;
+        border-radius: 16px;
+        background: var(--violet);
+        border: 1px solid var(--violet);
+        color: var(--white);
+        font-size: var(--text-size-s);
+        font-family: var(--font-family);
+    }
+
     &_empty {
         padding: 0px;
         background: inherit;
         border: none;
-        cursor: pointer;
     }
 }

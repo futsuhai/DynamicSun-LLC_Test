@@ -1,1 +1,33 @@
-<p>upload-page works!</p>
+<div class="content-wrapper">
+    <h1 class="content-wrapper__title">
+        Выберите файлы с расширением .xlsx для загрузки
+    </h1>
+    <label for="fileInput" class="content-wrapper__upload button button_primary">
+        Выбрать файлы
+    </label>
+    <input 
+        class="content-wrapper__upload-input"
+        id="fileInput" type="file" 
+        accept=".xlsx" multiple style="display: none" 
+        (change)="onFilesSelected($event)">
+    <div *ngIf="selectedFiles.length > 0" class="selected-files">
+        <p class="selected-files__title">
+            Выбранные файлы:
+        </p>
+        <ul class="selected-files-list">
+            <li *ngFor="let file of selectedFiles" class="selected-files-list__file">
+                {{ file.name }}
+                <button 
+                    type="button" class="selected-files-list__remove-button button button_empty" 
+                    (click)="removeFile(file)">
+                        <img src="assets/delete.svg" alt="delete-icon" class="selected-files-list__delete-icon">
+                </button>
+            </li>
+        </ul>
+    </div>
+    <button 
+        type="button" class="content-wrapper__submit button button_primary"
+        (click)="submitFiles()">
+            Отправить файлы
+    </button>
+</div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WeatherService } from 'src/app/services/weather.service';
 
 @Component({
   selector: 'app-main-page',
@@ -36,7 +37,15 @@ export class MainPageComponent {
     '-',
   ];
 
+  constructor(private weatherService: WeatherService) {
+    this.weatherService.ping().subscribe({
+      next: (response) => {
+        console.log(response);
+      }
+    });
+  }
+
   public toggleActive(index: number) {
-    this.activeIndex = this.activeIndex === index ? -1 : index;
+    this.activeIndex = this.activeIndex === index ? 0 : index;
   }
 }
