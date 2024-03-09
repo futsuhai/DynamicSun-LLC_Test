@@ -1,3 +1,5 @@
+using Weather_server.Mapper;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -6,7 +8,7 @@ builder.Services.AddSwaggerGen();
 //Repositories
 
 //Mapper
-
+builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 // Options
 
 // Services
