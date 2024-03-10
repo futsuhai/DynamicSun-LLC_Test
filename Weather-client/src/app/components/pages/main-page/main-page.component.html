@@ -5,7 +5,7 @@
                 Москва, Россия
             </h1>
             <p class="title__date">
-                7 Февраля 2023
+                {{ formatDate(weathers[activeWeatherIndex].date) }}
             </p>
         </div>
         <div class="weather main-info__weather">
@@ -14,45 +14,43 @@
                     Температура
                 </p>
                 <p class="temperature__value">
-                    20°
+                    {{ weathers[activeWeatherIndex].temperature }}°
                 </p>
                 <p class="temperature__feel">
-                    Ощущается как: 20°
-                </p>
+                    Ощущается как: {{ weathers[activeWeatherIndex].temperature | number:'1.0-0' }}°
+                </p>                
             </div>
             <div class="condition">
                 <img src="assets/conditions/cloudy.svg" alt="condition-icon" class="condition__icon">
                 <p class="condition__name">
-                    Облачно
+                    {{ weathers[activeWeatherIndex].weatherCondition }}
                 </p>
             </div>
         </div>
     </div>
     <div class="time-selection content-wrapper__time-selection">
         <button
-            *ngFor="let option of [0, 1, 2, 3, 4, 5, 6]; let i = index" 
+            *ngFor="let weather of weathers; let i = index" 
             type="button" 
-            class="time time-selection__item button_empty"
+            class="time time-selection__item button button_empty"
             (click)="toggleActive(i)" 
-            [ngClass]="{'time-selection__item_active': activeIndex === i}">
+            [ngClass]="{'time-selection__item_active': activeWeatherIndex === i}">
                 <p class="time__value">
-                    00
+                    {{ weather.date | date:'HH' }}
                 </p>
                 <img src="assets/conditions/cloudy.svg" alt="weather-icon" class="time__weather-icon">
                 <p class="time__temperature">
-                    20°
+                    {{ weather.temperature }}°
                 </p>
         </button>
     </div>
     <div class="addictional-info">
-        <div class="options">
-            <p *ngFor="let option of [0, 1, 2, 3, 4, 5, 6, 7]" class="options__name">
-                {{ names[option] }}
+        <div *ngFor="let param of weatherParams; let i = index" class="options">
+            <p class="options__name">
+                {{ param.name }}
             </p>
-        </div>
-        <div class="values">
-            <p *ngFor="let option of [0, 1, 2, 3, 4, 5, 6, 7]" class="values__value">
-                {{ values[option] }}
+            <p class="options__value">
+                {{ param.value }}
             </p>
         </div>
     </div>

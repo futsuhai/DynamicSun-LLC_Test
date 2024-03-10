@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { WeatherService } from 'src/app/services/weather.service';
 
 @Component({
   selector: 'app-upload-page',
@@ -15,11 +16,13 @@ export class UploadPageComponent {
 
   public selectedFiles: File[] = [];
 
-  public onFilesSelected(event: any) {
-    const selectedFilesList: FileList = event.target.files;
-    this.selectedFiles = [];
-    for (let i = 0; i < selectedFilesList.length; i++) {
-      this.selectedFiles.push(selectedFilesList[i]);
+  constructor(private weatherService: WeatherService) { }
+
+  public onFilesSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files) {
+      const selectedFilesList: FileList = inputElement.files;
+      this.selectedFiles = Array.from(selectedFilesList);
     }
   }
 
@@ -32,6 +35,10 @@ export class UploadPageComponent {
 
   public submitFiles(): void {
     console.log(this.selectedFiles);
+    this.weatherService.createWeathersFromFiles(this.selectedFiles).subscribe({
+      next: (responce) => {
+        console.log(responce);
+      }
+    });
   }
-
 }

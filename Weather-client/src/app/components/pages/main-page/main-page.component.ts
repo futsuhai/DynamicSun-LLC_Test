@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherService } from 'src/app/services/weather.service';
+import { IWeather } from 'src/app/models/Weather.model';
+import { IWeatherDate } from 'src/app/models/WeatherDate.model';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
+import { IWeatherParams } from 'src/app/models/WeatherParams.model';
 
 @Component({
   selector: 'app-main-page',
@@ -12,40 +17,49 @@ import { WeatherService } from 'src/app/services/weather.service';
     class: 'main-page-component'
   }
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
 
-  activeIndex: number = 0;
+  public testDate: IWeatherDate = {
+    date: new Date(Date.UTC(2024, 2, 9, 0, 0, 0))
+  };
+  public weathers: IWeather[] = [];
+  public testWeathers: IWeather[] = [];
+  public activeWeatherIndex: number = 0;
 
-  public names: string[] = [
-    'Влажность %',
-    'Точка росы',
-    'Давление мм рт. ст.',
-    'Направление ветра',
-    'Скорость ветра м/c',
-    'Облачность %',
-    'Нижняя граница облачности',
-    'Горизонтальная видимость',
-  ];
-  public values: string[] = [
-    '89',
-    '-6,9',
-    '737',
-    'З,ЮЗ',
-    '1',
-    '100',
-    '800',
-    '-',
-  ];
+  public weatherParams: IWeatherParams[] = [];
 
-  constructor(private weatherService: WeatherService) {
-    this.weatherService.ping().subscribe({
-      next: (response) => {
-        console.log(response);
+  constructor(private weatherService: WeatherService) { }
+
+  public ngOnInit(): void {
+    this.weatherService.getWeatherWithDate(this.testDate).subscribe({
+      next: (weathers: IWeather[]) => {
+        if (weathers) {
+          this.weathers = weathers;
+          this.setWeatherParams(this.weathers[this.activeWeatherIndex]);
+        }
       }
     });
   }
 
   public toggleActive(index: number) {
-    this.activeIndex = this.activeIndex === index ? 0 : index;
+    this.activeWeatherIndex = index;
+    this.setWeatherParams(this.weathers[this.activeWeatherIndex]);
+  }
+
+  public formatDate(date: Date): string {
+    return format(date, 'd MMMM yyyy', { locale: ru });
+  }
+
+  private setWeatherParams(activeWeather: IWeather) {
+    this.weatherParams = [
+      { name: 'Влажность %', value: activeWeather.humidity },
+      { name: 'Точка росы', value: activeWeather.td },
+      { name: 'Давление мм рт. ст.', value: activeWeather.pressure },
+      { name: 'Направление ветра', value: activeWeather.windDirection },
+      { name: 'Скорость ветра м/c', value: activeWeather.windSpeed },
+      { name: 'Облачность %', value: activeWeather.cloudy },
+      { name: 'Нижняя граница облачности', value: activeWeather.h },
+      { name: 'Горизонтальная видимость', value: activeWeather.vv }
+    ];
   }
 }
