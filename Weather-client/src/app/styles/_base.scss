@@ -1,3 +1,5 @@
+@import "src/app/styles/mixins";
+
 body {
     display: flex;
     justify-content: center;
@@ -7,4 +9,10 @@ body {
     width: 100vw;
     height: 100vh;
     overflow-y: auto;
+}
+
+@include sm {
+    body {
+        overflow-y: auto;
+    }
 }

@@ -18,7 +18,7 @@
 
     &__weather {
         width: 100%;
-        padding: 30px;
+        padding: 20px;
         border-radius: 16px;
         box-shadow: 2px 8px 20px -1px rgba(0, 0, 0, 0.15);
         background: var(--white);
@@ -73,9 +73,9 @@
 }
 
 .time-selection {
-    width: 380px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
     &__item {
         padding: 8px;
@@ -96,8 +96,12 @@
     align-items: center;
 
     &__weather-icon {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
+    }
+
+    &__temperature {
+        font-size: var(--text-size-xs);
     }
 }
 
@@ -119,6 +123,19 @@
     &__value {
         font-size: var(--text-size-m);
         color: var(--grey);
+    }
+}
+
+.no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+
+    &__title {
+        font-size: var(--text-size-m);
+        color: var(--grey-light);
     }
 }
 
