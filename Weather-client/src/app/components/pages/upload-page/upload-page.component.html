@@ -1,6 +1,6 @@
 <div class="content-wrapper">
     <h1 class="content-wrapper__title">
-        Выберите файлы с расширением .xlsx для загрузки
+        Выберите файлы для загрузки
     </h1>
     <label for="fileInput" class="content-wrapper__upload button button_primary">
         Выбрать файлы
@@ -30,4 +30,9 @@
         (click)="submitFiles()">
             Отправить файлы
     </button>
+    <div *ngIf="errorMessage" class="error">
+        <p class="error__text">
+            {{ errorMessage }}
+        </p>
+    </div>
 </div>

@@ -1,0 +1,16 @@
+.not-found {
+    &__wrapper {
+        height: 80vh;
+        padding-top: 40px;
+    }
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    &__title {
+        color: var(--grey);
+    }
+}

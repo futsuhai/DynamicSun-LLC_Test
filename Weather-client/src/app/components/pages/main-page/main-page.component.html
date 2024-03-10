@@ -72,6 +72,7 @@
                   </mat-datepicker-actions>
                 </mat-datepicker>
             </mat-form-field>
+            <p *ngIf="weathers.length === 0" class="no-data__title">На данную дату нет данных</p>
         </div>
     </ng-template>
 </div>

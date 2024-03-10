@@ -6,7 +6,7 @@ namespace Weather_server.Services.ParserService
 {
     public class ParserService() : IParserService
     {
-        public async Task<List<Weather>> ParseFiles(IFormFileCollection files)
+        public async Task<IList<Weather>> ParseFiles(IFormFileCollection files)
         {
             List<Weather> weatherData = [];
 

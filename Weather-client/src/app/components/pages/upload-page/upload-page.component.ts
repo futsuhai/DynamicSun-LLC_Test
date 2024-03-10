@@ -14,12 +14,14 @@ import { WeatherService } from 'src/app/services/weather.service';
 })
 export class UploadPageComponent {
 
+  public errorMessage: string = "";
   public selectedFiles: File[] = [];
 
   constructor(private weatherService: WeatherService) { }
 
   public onFilesSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
+    this.errorMessage = "";
     if (inputElement.files) {
       const selectedFilesList: FileList = inputElement.files;
       this.selectedFiles = Array.from(selectedFilesList);
@@ -34,10 +36,12 @@ export class UploadPageComponent {
   }
 
   public submitFiles(): void {
-    console.log(this.selectedFiles);
     this.weatherService.createWeathersFromFiles(this.selectedFiles).subscribe({
       next: (responce) => {
         console.log(responce);
+      },
+      error: (error) => {
+        this.errorMessage = error.error;
       }
     });
   }

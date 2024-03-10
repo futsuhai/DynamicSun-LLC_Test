@@ -9,8 +9,6 @@
         font-size: var(--text-size-m);
         color: var(--grey);
     }
-
-
 }
 
 .selected-files {
@@ -48,5 +46,12 @@
         right: -14px;
         width: 16px;
         height: 16px;
+    }
+}
+
+.error {
+    &__text {
+        font-size: var(--text-size-m);
+        color: var(--red);
     }
 }

@@ -13,7 +13,7 @@ namespace Weather_server.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
     [Migration("20240310175340_init")]
-    partial class init
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
