@@ -20,7 +20,7 @@ import { IWeatherParams } from 'src/app/models/WeatherParams.model';
 export class MainPageComponent implements OnInit {
 
   public testDate: IWeatherDate = {
-    date: new Date(Date.UTC(2024, 2, 9, 0, 0, 0))
+    date: new Date(Date.UTC(2010, 0, 4, 0, 0, 0))
   };
   public weathers: IWeather[] = [];
   public testWeathers: IWeather[] = [];
@@ -52,14 +52,14 @@ export class MainPageComponent implements OnInit {
 
   private setWeatherParams(activeWeather: IWeather) {
     this.weatherParams = [
-      { name: 'Влажность %', value: activeWeather.humidity },
-      { name: 'Точка росы', value: activeWeather.td },
-      { name: 'Давление мм рт. ст.', value: activeWeather.pressure },
+      { name: 'Влажность, %', value: activeWeather.humidity },
+      { name: 'Точка росы, гр. Ц.', value: activeWeather.td },
+      { name: 'Давление, мм рт. ст.', value: activeWeather.pressure },
       { name: 'Направление ветра', value: activeWeather.windDirection },
-      { name: 'Скорость ветра м/c', value: activeWeather.windSpeed },
-      { name: 'Облачность %', value: activeWeather.cloudy },
-      { name: 'Нижняя граница облачности', value: activeWeather.h },
-      { name: 'Горизонтальная видимость', value: activeWeather.vv }
+      { name: 'Скорость ветра, м/c', value: activeWeather.windSpeed === 0 ? '-' : activeWeather.windSpeed },
+      { name: 'Облачность, %', value: activeWeather.cloudy === 0 ? '-' : activeWeather.cloudy },
+      { name: 'Нижняя граница облачности, м', value: activeWeather.h },
+      { name: 'Горизонтальная видимость, км', value: activeWeather.vv === 0 ? '-' : activeWeather.vv }
     ];
   }
 }

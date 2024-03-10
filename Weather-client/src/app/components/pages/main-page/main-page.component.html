@@ -16,15 +16,9 @@
                 <p class="temperature__value">
                     {{ weathers[activeWeatherIndex].temperature }}°
                 </p>
-                <p class="temperature__feel">
-                    Ощущается как: {{ weathers[activeWeatherIndex].temperature | number:'1.0-0' }}°
-                </p>                
-            </div>
-            <div class="condition">
-                <img src="assets/conditions/cloudy.svg" alt="condition-icon" class="condition__icon">
-                <p class="condition__name">
+                <p class="temperature__title">
                     {{ weathers[activeWeatherIndex].weatherCondition }}
-                </p>
+                </p>                
             </div>
         </div>
     </div>

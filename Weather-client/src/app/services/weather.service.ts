@@ -17,7 +17,14 @@ export class WeatherService {
 
   public createWeathersFromFiles(files: File[]): Observable<void> {
     const endpoint: string = `${this.api}/createWeathersFromFiles`;
-    return this.restService.restPOST<void>(endpoint, files);
+    const formData: FormData = new FormData();
+    
+    // Добавляем каждый файл в объект FormData
+    files.forEach((file: File) => {
+      formData.append('files', file, file.name);
+    });
+
+    return this.restService.restPOST<void>(endpoint, formData);
   }
 
   public getWeatherWithDate(weatherDate: IWeatherDate): Observable<IWeather[]> {

@@ -3,6 +3,7 @@ using Weather_server.Context;
 using Weather_server.Mapper;
 using Weather_server.Repositories;
 using Weather_server.Services.DayService;
+using Weather_server.Services.ParserService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,7 @@ builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL")));
 builder.Services.AddScoped<IDbRepository, DbRepository>();
 builder.Services.AddTransient<IWeatherService, WeatherService>();
+builder.Services.AddTransient<IParserService, ParserService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

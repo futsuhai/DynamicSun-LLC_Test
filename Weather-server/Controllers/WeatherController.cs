@@ -1,53 +1,34 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using NPOI.SS.UserModel;
 using Weather_server.Models.Backend;
 using Weather_server.Models.Client;
 using Weather_server.Services.DayService;
+using Weather_server.Services.ParserService;
 
 namespace Weather_server.Controllers
 {
     [ApiController]
     [Route("api/weather")]
-    public class WeatherController(ILogger<WeatherController> logger, IWeatherService weatherService, IMapper mapper) : ControllerBase
+    public class WeatherController(ILogger<WeatherController> logger, IWeatherService weatherService, IParserService parserService, IMapper mapper) : ControllerBase
     {
         private readonly ILogger<WeatherController> _logger = logger;
         private readonly IWeatherService _weatherService = weatherService;
+        private readonly IParserService _parserService = parserService;
         private readonly IMapper _mapper = mapper;
 
+
         [HttpPost("createWeathersFromFiles")]
-        public async Task<IActionResult> CreateWeathersFromFiles(IFormFile[] files)
+        public async Task<IActionResult> CreateWeathersFromFiles(IFormFileCollection files)
         {
-            List<string> firstCellValues = [];
-
-            foreach (var file in files)
+            var weathers = await _parserService.ParseFiles(files);
+            if (weathers.Count == 0)
             {
-                // Чтение содержимого файла
-                using var memoryStream = new MemoryStream();
-                file.CopyTo(memoryStream);
-                memoryStream.Position = 0;
-
-                // Загрузка книги из потока
-                IWorkbook workbook = WorkbookFactory.Create(memoryStream);
-
-                // Получение первого листа
-                ISheet sheet = workbook.GetSheetAt(0);
-
-                if (sheet != null && sheet.GetRow(0) != null && sheet.GetRow(0).GetCell(0) != null)
-                {
-                    // Чтение значения первой ячейки
-                    var cellValue = sheet.GetRow(0).GetCell(0).ToString();
-                    firstCellValues.Add(cellValue);
-                }
+                return BadRequest("No weather data found in the files.");
             }
-
-            foreach (var value in firstCellValues)
-            {
-                _logger.LogInformation($"First cell value: {value}");
-            }
-
+            await _weatherService.AddRangeAsync(weathers);
             return Ok("Files uploaded successfully");
         }
+
 
         [HttpPut("getWeatherWithDate")]
         public async Task<IActionResult> GetWeatherWithDate([FromBody] WeatherDateModel weatherDateModel)
@@ -63,40 +44,6 @@ namespace Weather_server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving weather data.");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        [HttpPost("createWeather")]
-        public async Task<IActionResult> CreateWeather([FromBody] WeatherModel weatherModel)
-        {
-            try
-            {
-                var weather = _mapper.Map<Weather>(weatherModel);
-                await _weatherService.AddAsync(weather);
-                _logger.LogInformation("Weather successfully created");
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creting weather");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        [HttpPost("createWeatherRange")]
-        public async Task<IActionResult> CreateWeatherRange([FromBody] WeatherModel[] weatherModel)
-        {
-            try
-            {
-                var weathers = _mapper.Map<List<Weather>>(weatherModel);
-                await _weatherService.AddRangeAsync(weathers);
-                _logger.LogInformation("Weathers successfully created");
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creting weathers");
                 return StatusCode(500, "Internal server error");
             }
         }
