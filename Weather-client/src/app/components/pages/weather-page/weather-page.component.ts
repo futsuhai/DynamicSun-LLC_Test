@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IWeatherDate } from 'src/app/models/WeatherDate.model';
 import { IWeather } from 'src/app/models/Weather.model';
@@ -11,6 +11,7 @@ import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-weather-page',
@@ -22,7 +23,7 @@ import { FormsModule } from '@angular/forms';
     class: 'weather-component'
   }
 })
-export class WeatherPageComponent {
+export class WeatherPageComponent implements OnDestroy {
 
   @ViewChild('datepicker') datePicker!: MatDatepicker<Date>;
   public selectedDate: IWeatherDate = {
@@ -31,6 +32,7 @@ export class WeatherPageComponent {
   public weathers: IWeather[] = [];
   public activeWeatherIndex: number = 0;
   public weatherParams: IWeatherParams[] = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private weatherService: WeatherService) { }
 
@@ -72,5 +74,10 @@ export class WeatherPageComponent {
       { name: 'Нижняя граница облачности', value: (activeWeather.h.toString() + 'м') },
       { name: 'Горизонтальная видимость', value: activeWeather.vv === 0 ? '-' : (activeWeather.vv.toString() + 'км') }
     ];
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

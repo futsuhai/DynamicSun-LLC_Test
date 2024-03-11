@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherService } from 'src/app/services/weather.service';
 import { IFileUploadInfo } from 'src/app/models/FileUploadInfo.model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-upload-page',
@@ -13,11 +14,12 @@ import { IFileUploadInfo } from 'src/app/models/FileUploadInfo.model';
     class: 'upload-component'
   }
 })
-export class UploadPageComponent {
+export class UploadPageComponent implements OnDestroy {
 
   public errorMessage: string = "";
   public selectedFiles: File[] = [];
   public filesUploadInfo: IFileUploadInfo[] = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private weatherService: WeatherService) { }
 
@@ -48,5 +50,10 @@ export class UploadPageComponent {
         }
       }
     });
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
