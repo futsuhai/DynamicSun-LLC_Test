@@ -1,0 +1,27 @@
+@import "src/app/styles/mixins";
+
+.navigation-list {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    &__link {
+        font-weight: 700;
+        font-size: var(--text-size-xm);
+        color: var(--dark-grey);
+
+        &:hover, &_active {
+            color: var(--violet);
+        }
+    }
+}
+
+@include sm {
+    .navigation-list {
+        gap: 20px;
+    
+        &__link {
+            font-size: var(--text-size-s);
+        }
+    }
+}

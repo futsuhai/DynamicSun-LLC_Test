@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Weather_server.Models.Backend;
 using Weather_server.Models.Client;
 using Weather_server.Services.DayService;
 using Weather_server.Services.ParserService;
@@ -19,17 +20,28 @@ namespace Weather_server.Controllers
         [HttpPost("createWeathersFromFiles")]
         public async Task<IActionResult> CreateWeathersFromFiles(IFormFileCollection files)
         {
+            var uploadInfoList = new List<FileUploadInfo>();
             try
             {
-                var weathers = await _parserService.ParseFiles(files);
-                if (weathers.Count == 0)
+                foreach (var file in files)
                 {
-                    _logger.LogError("Загруженный файл не подлежит разбору");
-                    return BadRequest("Загруженный файл не подлежит разбору");
+                    var uploadInfo = new FileUploadInfo { FileName = file.FileName };
+                    var weathers = await _parserService.ParseFile(file);
+                    if (weathers.Count == 0)
+                    {
+                        _logger.LogError($"Файл {file.FileName} не подлежит разбору");
+                        uploadInfo.Result = false;
+                    }
+                    else
+                    {
+                        await _weatherService.AddRangeAsync(weathers);
+                        uploadInfo.Result = true;
+                        _logger.LogInformation($"Данные о погоде из файла {file.FileName} успешно записаны");
+                    }
+                    uploadInfoList.Add(uploadInfo);
                 }
-                await _weatherService.AddRangeAsync(weathers);
-                _logger.LogInformation("Данные о погоде успешно записаны");
-                return Ok("Files uploaded successfully");
+                var uploadInfoModelsList = _mapper.Map<List<FileUploadInfo>>(uploadInfoList);
+                return Ok(uploadInfoModelsList);
             }
             catch (Exception ex)
             {
@@ -37,7 +49,6 @@ namespace Weather_server.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
 
         [HttpPut("getWeatherWithDate")]
         public async Task<IActionResult> GetWeatherWithDate([FromBody] WeatherDateModel weatherDateModel)

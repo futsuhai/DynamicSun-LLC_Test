@@ -7,7 +7,10 @@
     &__title {
         font-weight: 700;
         font-size: var(--text-size-m);
-        color: var(--grey);
+    }
+
+    &__upload-input {
+        display: none;
     }
 }
 
@@ -19,8 +22,7 @@
 
     &__title {
         font-weight: 700;
-        font-size: var(--text-size-s);
-        color: var(--grey);
+        font-size: var(--text-size-m);
     }
 }
 
@@ -42,15 +44,27 @@
 
     &__delete-icon {
         position: absolute;
-        bottom: 8px;
+        bottom: 2px;
         right: -14px;
         width: 16px;
         height: 16px;
     }
+
+    &__file-status {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.file {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .error {
     &__text {
+        font-weight: 700;
         font-size: var(--text-size-m);
         color: var(--red);
     }

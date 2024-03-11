@@ -12,6 +12,9 @@ namespace Weather_server.Mapper
                 .ForMember(dest => dest.DateCreated, opt => opt.Ignore())
                 .ForMember(dest => dest.DateUpdated, opt => opt.Ignore())
                 .ReverseMap();
+
+            CreateMap<FileUploadInfoModel, FileUploadInfo>()
+                .ReverseMap();
         }
     }
 }

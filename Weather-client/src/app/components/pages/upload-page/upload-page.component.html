@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+<div class="content-wrapper container_base">
     <h1 class="content-wrapper__title">
         Выберите файлы для загрузки
     </h1>
@@ -8,14 +8,19 @@
     <input 
         class="content-wrapper__upload-input"
         id="fileInput" type="file" 
-        accept=".xlsx" multiple style="display: none" 
+        accept=".xlsx" multiple 
         (change)="onFilesSelected($event)">
     <div *ngIf="selectedFiles.length > 0" class="selected-files">
         <p class="selected-files__title">
             Выбранные файлы:
         </p>
         <ul class="selected-files-list">
-            <li *ngFor="let file of selectedFiles" class="selected-files-list__file">
+            <li *ngFor="let file of selectedFiles; let i = index" class="file selected-files-list__file">
+                <img 
+                    *ngIf="filesUploadInfo.length > 0"
+                    src="{{ filesUploadInfo[i].result ? 'assets/ready.svg' : 'assets/delete.svg' }}" 
+                    alt="file-status" 
+                    class="selected-files-list__file-status">
                 {{ file.name }}
                 <button 
                     type="button" class="selected-files-list__remove-button button button_empty" 

@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from './components/layout/sidebar/sidebar.component';
+import { HeaderComponent } from './components/layout/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SidebarComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   host: {
     class: 'root-component'
   }
 })
-export class AppComponent {
-
-  public test: number = 0;
-
-}
+export class AppComponent { }

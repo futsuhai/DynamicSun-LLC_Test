@@ -1,0 +1,90 @@
+<ng-container *ngIf="weathers.length > 0; else noWeathers">
+    <div class="weather-info">
+        <div class="weather-main weather-info__weather-main container_base">
+            <div class="weather-date">
+                <p class="weather-date__location">
+                    Москва
+                </p>
+                <p class="weather-date__date">
+                    {{ formatDate(weathers[activeWeatherIndex].date) }}
+                </p>
+                <p class="weather-date__temperature">
+                    {{ weathers[activeWeatherIndex].temperature }}°
+                </p>
+            </div>
+            <button 
+                type="button" 
+                class="date-settings weather-main__date-settings button button_empty"
+                (click)="openDatePicker()">
+                    <img src="assets/settings.svg" alt="setting-icon" class="date-settings__icon">
+            </button>
+            <input class="datepicker-input" matInput [matDatepicker]="datepicker" [(ngModel)]="selectedDate.date">
+            <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                    <button mat-button matDatepickerCancel>Отмена</button>
+                    <button mat-raised-button color="primary" matDatepickerApply (click)="selectDate()">Принять</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </div>
+        <div class="weather-stats container_base">
+            <div class="weather-condition">
+                <img src="assets/weather.svg" alt="weather-condition-icon" class="weather-condition__icon">
+                <p class="weather-condition__description">
+                    {{ weathers[activeWeatherIndex].weatherCondition }}
+                </p>
+            </div>
+            <div class="weather-stats-container">
+                <div *ngFor="let param of weatherParams" class="weather-stat">
+                    <p class="weather-stat__value">
+                        {{ param.value }}
+                    </p>
+                    <p class="weather-stat__name">
+                        {{ param.name }}
+                    </p>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="time-selection container_base">
+        <button 
+            *ngFor="let weather of weathers; let i = index"
+            type="button" 
+            class="time time-selection__item button button_empty"
+            [ngClass]="{'time-selection__item_active': activeWeatherIndex === i}"
+            (click)="toggleActive(i)">
+                <p class="time__item">
+                    {{ weather.date | date:'HH:mm':'UTC' }}
+                </p>
+                <img src="assets/weather.svg" alt="weather-icon" class="time__weather-icon">
+                <p class="time__item">
+                    {{ weather.temperature }}°
+                </p>
+        </button>
+</div>
+</ng-container>
+<ng-template #noWeathers>
+    <div class="no-data container_base">
+        <p class="no-data__error">
+            По данной дате нет данных!
+        </p>
+        <div class="date">
+            <p class="data__title">
+                Выберите другую дату
+            </p>
+            <button 
+                type="button" 
+                class="date-settings no-data__date-settings button button_empty"
+                (click)="openDatePicker()">
+                    <img src="assets/settings.svg" alt="setting-icon" class="date-settings__icon">
+            </button>
+        </div>
+        <input class="datepicker-input" matInput [matDatepicker]="datepicker" [(ngModel)]="selectedDate.date">
+        <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Отмена</button>
+            <button mat-raised-button color="primary" matDatepickerApply (click)="selectDate()">Принять</button>
+        </mat-datepicker-actions>
+        </mat-datepicker>
+    </div>
+</ng-template>
+

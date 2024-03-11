@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WeatherService } from 'src/app/services/weather.service';
+import { IFileUploadInfo } from 'src/app/models/FileUploadInfo.model';
 
 @Component({
   selector: 'app-upload-page',
@@ -9,13 +10,14 @@ import { WeatherService } from 'src/app/services/weather.service';
   templateUrl: './upload-page.component.html',
   styleUrls: ['./upload-page.component.scss'],
   host: {
-    class: 'upload-page-component'
+    class: 'upload-component'
   }
 })
 export class UploadPageComponent {
 
   public errorMessage: string = "";
   public selectedFiles: File[] = [];
+  public filesUploadInfo: IFileUploadInfo[] = [];
 
   constructor(private weatherService: WeatherService) { }
 
@@ -37,11 +39,13 @@ export class UploadPageComponent {
 
   public submitFiles(): void {
     this.weatherService.createWeathersFromFiles(this.selectedFiles).subscribe({
-      next: (responce) => {
-        console.log(responce);
-      },
-      error: (error) => {
-        this.errorMessage = error.error;
+      next: (filesUploadInfo: IFileUploadInfo[]) => {
+        this.filesUploadInfo = filesUploadInfo;
+        if (this.filesUploadInfo.some(file => !file.result)) {
+          this.errorMessage = "Один из загруженных файлов не подлежит разбору!";
+        } else {
+          this.errorMessage = "Все файлы успешно загружены";
+        }
       }
     });
   }

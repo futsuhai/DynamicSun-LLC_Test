@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
   host: {
-    class: 'sidebar-component'
+    class: 'header-component'
   }
 })
-export class SidebarComponent {
+export class HeaderComponent {
 
-  public currentRout: string = "";
+  public currentRout: string = '';
 
   constructor(private router: Router) { }
 
